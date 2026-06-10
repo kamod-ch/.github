@@ -42,6 +42,6 @@ We open-source the tools we rely on and welcome contributions. Explore our flags
 
 ### Get in touch
 
-Baarerstrasse 107 · 6300 Zug · Switzerland
+Baarerstrasse 107 · 6300 Zug · Switzerland :switzerland:
 
 Visit [www.kamod.ch](https://www.kamod.ch) or write to [info@kamod.ch](mailto:info@kamod.ch).
