@@ -21,7 +21,6 @@ We build professional IT solutions for modern enterprises — turning complex ch
 
 - **Custom Software Development** — tailor-made applications that streamline business processes
 - **Cloud Solutions** — scalable infrastructure design, migration, and management (Hetzner Cloud)
-- **Cybersecurity** — security assessments and implementation to protect your digital assets
 - **IT Consulting** — strategic technology advice for informed decisions
 
 ### Open Source
@@ -29,9 +28,9 @@ We build professional IT solutions for modern enterprises — turning complex ch
 We open-source the tools we rely on and welcome contributions. Explore our flagship projects:
 
 - [Kamod UI](https://github.com/kamod-ch/kamod-ui): lightweight Preact + Tailwind UI components — [ui.kamod.ch](https://ui.kamod.ch/) · [npm](https://www.npmjs.com/package/@kamod-ch/ui)
-- [PreactPress](https://github.com/kamod-ch/preactpress): Preact + Vite static site generator for docs, blogs, and marketing sites
-- [kamod-hooks](https://github.com/kamod-ch/kamod-hooks): Preact hooks library, structured like Kamod UI
-- [editable.ts](https://github.com/watzak/editable.ts): lightweight, typed API for block-level `contenteditable` editing — [npm](https://www.npmjs.com/package/editable.ts)
+- [PreactPress](https://github.com/kamod-ch/preactpress): Preact + Vite static site generator for docs, blogs, and marketing sites — [kamod-ch.github.io/preactpress](https://kamod-ch.github.io/preactpress/) · [npm](https://www.npmjs.com/package/@kamod-ch/preactpress)
+- [kamod-hooks](https://github.com/kamod-ch/kamod-hooks): Preact hooks library, structured like Kamod UI — [npm](https://www.npmjs.com/package/@kamod-ch/hooks)
+- [editable.ts](https://github.com/watzak/editable.ts): lightweight, typed API for block-level `contenteditable` editing — [watzak.github.io/editable.ts](https://watzak.github.io/editable.ts/examples/) · [npm](https://www.npmjs.com/package/editable.ts)
 
 ### Technologies we work with
 
