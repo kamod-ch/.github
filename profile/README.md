@@ -23,7 +23,6 @@ We build custom web applications, cloud infrastructure, and security-minded syst
 
 - **Custom Software Development** — web apps and internal tools tailored to real workflows
 - **Cloud Solutions** — infrastructure design, migration, and management on Hetzner Cloud
-- **Cybersecurity** — assessments and implementation work to reduce risk
 - **IT Consulting** — technical guidance for architecture, delivery, and platform choices
 
 ### Open Source
