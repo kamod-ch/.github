@@ -1,23 +1,27 @@
-# Kamod GmbH — Innovative Software Solutions
+# Kamod GmbH
 
-We build professional IT solutions for modern enterprises — turning complex challenges into scalable, secure, and efficient digital products.
+Practical software engineering for teams that need shipped work, not slideware.
+
+We build custom web applications, cloud infrastructure, and security-minded systems for modern businesses.
 
 **[www.kamod.ch](https://www.kamod.ch)**
 
 ### What we do
 
-- **Custom Software Development** — tailor-made applications that streamline business processes
-- **Cloud Solutions** — scalable infrastructure design, migration, and management (Hetzner Cloud)
-- **Cybersecurity** — security assessments and implementation to protect your digital assets
-- **IT Consulting** — strategic technology advice for informed decisions
+- **Custom Software Development** — web apps and internal tools tailored to real workflows
+- **Cloud Solutions** — infrastructure design, migration, and management on Hetzner Cloud
+- **Cybersecurity** — assessments and implementation work to reduce risk
+- **IT Consulting** — technical guidance for architecture, delivery, and platform choices
 
 ### Open Source
 
-We open-source the tools we rely on and welcome contributions. Explore our flagship projects:
+We publish the tools we build and use when they’re useful to others:
 
 - [Kamod UI](https://github.com/kamod-ch/kamod-ui): lightweight Preact + Tailwind UI components — [ui.kamod.ch](https://ui.kamod.ch/) · [npm](https://www.npmjs.com/package/@kamod-ch/ui)
 - [PreactPress](https://github.com/kamod-ch/preactpress): Preact + Vite static site generator for docs, blogs, and marketing sites — [kamod-ch.github.io/preactpress](https://kamod-ch.github.io/preactpress/) · [npm](https://www.npmjs.com/package/@kamod-ch/preactpress)
 - [kamod-hooks](https://github.com/kamod-ch/kamod-hooks): Preact hooks library, structured like Kamod UI — [npm](https://www.npmjs.com/package/@kamod-ch/hooks)
+- [Kamod Icons](https://github.com/kamod-ch/kamod-icons): lightweight, tree-shakeable SVG icon components for Preact apps — [kamod-ch.github.io/kamod-icons](https://kamod-ch.github.io/kamod-icons/) · [npm](https://www.npmjs.com/package/@kamod-ch/icons)
+- [Kamod Signals](https://github.com/kamod-ch/kamod-signals): persisted Preact signals for localStorage, sessionStorage, IndexedDB, cookies, and memory — [kamod-ch.github.io/kamod-signals](https://kamod-ch.github.io/kamod-signals/) · [npm](https://www.npmjs.com/package/@kamod-ch/signals)
 - [editable.ts](https://github.com/watzak/editable.ts): lightweight, typed API for block-level `contenteditable` editing — [watzak.github.io/editable.ts](https://watzak.github.io/editable.ts/examples/) · [npm](https://www.npmjs.com/package/editable.ts)
 
 ### Technologies we work with
