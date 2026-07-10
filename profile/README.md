@@ -25,6 +25,10 @@ We build custom web applications, cloud infrastructure, and security-minded syst
 - **Cloud Solutions** — infrastructure design, migration, and management on Hetzner Cloud
 - **IT Consulting** — technical guidance for architecture, delivery, and platform choices
 
+### SaaS
+
+- [Syncding](https://www.syncding.com): managed Syncthing hub for syncing project files, Obsidian vaults, and team folders without running your own server. Syncding is a commercial SaaS product, not open source.
+
 ### Open Source
 
 We publish the tools we build and use when they’re useful to others:
