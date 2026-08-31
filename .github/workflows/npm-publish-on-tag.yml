@@ -49,12 +49,7 @@ jobs:
       - name: Pre-publish checks
         run: ${{ inputs.pre-publish }}
 
-      - name: Upgrade npm for provenance
-        run: npm install -g npm@^11.5.1
-
       - name: Publish to npm
         run: ${{ inputs.publish }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          npm_config_provenance: true
-          npm_config_access: public
