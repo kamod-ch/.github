@@ -1,0 +1,50 @@
+name: npm publish on tag
+description: Install deps, run checks, and publish to npm via pnpm (OIDC or NPM_TOKEN fallback)
+
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: "22"
+  pre-publish:
+    description: Command to run before publishing (e.g. pnpm release:check)
+    required: true
+  publish:
+    description: Command to publish packages (e.g. pnpm release:publish)
+    required: true
+  npm-token:
+    description: Optional npm automation token when OIDC trusted publishing is not configured
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: pnpm
+
+    - name: Configure npm token auth
+      if: inputs.npm-token != ''
+      shell: bash
+      run: echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" >> "$HOME/.npmrc"
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+
+    - name: Pre-publish checks
+      shell: bash
+      run: ${{ inputs.pre-publish }}
+
+    - name: Publish to npm
+      shell: bash
+      run: ${{ inputs.publish }}
