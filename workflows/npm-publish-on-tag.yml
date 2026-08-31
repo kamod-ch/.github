@@ -1,0 +1,67 @@
+name: npm publish on tag
+
+on:
+  workflow_call:
+    inputs:
+      pnpm-version:
+        description: pnpm version for pnpm/action-setup
+        required: false
+        type: string
+        default: "10"
+      node-version:
+        description: Node.js version
+        required: false
+        type: string
+        default: "22"
+      pre-publish:
+        description: Command to run before publishing (e.g. pnpm release:check)
+        required: true
+        type: string
+      publish:
+        description: Command to publish packages (e.g. pnpm release:publish)
+        required: true
+        type: string
+    secrets:
+      NPM_TOKEN:
+        description: Optional npm automation token (fallback when OIDC trusted publishing is not configured)
+        required: false
+
+jobs:
+  publish:
+    name: Publish packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Pre-publish checks
+        run: ${{ inputs.pre-publish }}
+
+      - name: Upgrade npm for provenance
+        run: npm install -g npm@latest
+
+      - name: Publish to npm
+        run: ${{ inputs.publish }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm_config_provenance: true
+          npm_config_access: public
