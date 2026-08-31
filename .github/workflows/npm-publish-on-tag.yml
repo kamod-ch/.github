@@ -3,11 +3,6 @@ name: npm publish on tag
 on:
   workflow_call:
     inputs:
-      pnpm-version:
-        description: pnpm version for pnpm/action-setup
-        required: false
-        type: string
-        default: "10"
       node-version:
         description: Node.js version
         required: false
@@ -40,8 +35,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: ${{ inputs.pnpm-version }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
