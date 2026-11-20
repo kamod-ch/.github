@@ -1,43 +1,88 @@
 name: Weekly AI Maintenance
+
 on:
   workflow_call:
     inputs:
-      custom_instructions:
-        required: false
+      node_version:
         type: string
+        required: false
+        default: "22"
+      auto_merge:
+        type: boolean
+        required: false
+        default: true
+      custom_instructions:
+        type: string
+        required: false
         default: ""
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN:
         required: true
+      BOT_TOKEN:
+        required: true
 
 jobs:
-  ai-update:
+  maintain:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
+          token: ${{ secrets.BOT_TOKEN }}
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ inputs.node_version }}
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - uses: anthropics/claude-code-action@v1
+      - name: Run Claude Code Maintenance
+        uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--max-turns 30 --allowedTools Bash,Read,Write,Edit,Glob,Grep"
           prompt: |
-            Führe die wöchentliche Wartung für dieses Repository durch:
-            1. Prüfe veraltete Dependencies (`pnpm outdated`) und aktualisiere Patch/Minor-Updates sicher.
-            2. Passe Code, Typen oder Docs an, falls sich etwas geändert hat.
-            3. Führe `pnpm check` und `pnpm lint` aus und behebe eventuelle Fehler.
-            4. Falls Änderungen am veröffentlichten Paketcode vorgenommen wurden, erstelle eine passende `.changeset/*.md`-Datei.
-            5. Wenn keine sinnvollen Änderungen nötig sind, beende den Lauf ohne Commit.
-            Zusatzhinweise: ${{ inputs.custom_instructions }}
-          claude_args: "--max-turns 25"
+            Lies zuerst die `CLAUDE.md` im Repository (falls vorhanden) und halte dich strikt an deren Regeln.
+            Führe danach die wöchentliche Wartung durch:
+            1. Prüfe veraltete Pakete mit `pnpm outdated` und aktualisiere Patch- und Minor-Updates (`pnpm update`). Major-Updates nur durchführen, wenn sie trivial und breaking-free sind.
+            2. Falls durch Updates oder neue TypeScript-/Linter-Regeln Anpassungen im Code, an Typen oder in der Doku/README nötig sind, setze diese um.
+            3. Führe alle Validierungs-Skripte aus `package.json` aus (z. B. `pnpm check`, `pnpm lint`, `pnpm test`, `pnpm build`) und behebe Fehler.
+            4. Falls sich am veröffentlichten Paketcode (`src/`) oder an runtime `dependencies` etwas geändert hat, erstelle eine passende `.changeset/weekly-update.md` (meist `patch`). Bei reinen `devDependencies`- oder Docs-Updates KEIN Changeset anlegen.
+            5. Erstelle KEINE Git-Commits oder Branches selbst – hinterlasse einfach die sauberen Dateiänderungen im Arbeitsverzeichnis.
+            Zusatzanweisungen für dieses Repo: ${{ inputs.custom_instructions }}
+
+      - name: Create or Update Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          branch: chore/weekly-ai-maintenance
+          delete-branch: true
+          commit-message: "chore(deps): weekly automated maintenance"
+          title: "chore(deps): weekly automated maintenance"
+          body: |
+            Automatisiertes wöchentliches Update durch Claude Code:
+            - Dependencies geprüft & aktualisiert
+            - Typecheck, Lint, Tests und Build verifiziert
+            - Changeset erstellt (falls Paket-Release erforderlich)
+          labels: |
+            automated
+            dependencies
+
+      - name: Enable GitHub Auto-Merge
+        if: inputs.auto_merge && steps.cpr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --auto --squash
